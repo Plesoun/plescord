@@ -12,3 +12,9 @@ This is a ws server implementation in go (in a form of a messaging app). It is p
 6.  Authentication and user management
 7.  Chat rooms and private messages
 8.  Containerization
+9.  Log to file
+10. Rate limiting (spam mitigation)
+11. Message editing/deleting
+12. Typing indicators (needs to be supported on server and client sides)
+13. Read receipts (needs to be supported on server and client sides)
+14. User profiles
