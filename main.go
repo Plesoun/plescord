@@ -1,9 +1,14 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"net/http"
 
+	// local packages
+	"main.go/config"
+
+	// external packages
 	"github.com/gorilla/websocket"
 )
 
@@ -26,6 +31,15 @@ var upgrader = websocket.Upgrader{
 }
 
 func main() {
+	// load configuration
+	configPath := flag.String("config", "./localconf.yaml", "Path to configuration file")
+	flag.Parse()
+
+	config, configerr := config.LoadConfig(configPath)
+	if configerr != nil {
+		log.Fatal("Failed to load configuration")
+	}
+
 	fs := http.FileServer(http.Dir("./test"))
 	http.Handle("/", fs)
 
@@ -33,9 +47,9 @@ func main() {
 
 	go handleMessages()
 
-	log.Println("http server started on :8000")
+	log.Printf("http server started on :%s", config.WebsocketPort)
 
-	err := http.ListenAndServe(":8000", nil)
+	err := http.ListenAndServe(":"+config.WebsocketPort, nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}

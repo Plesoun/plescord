@@ -1,0 +1,4 @@
+# Websocket server details
+websocket:
+  bind_address: localhost
+  port: 8000
