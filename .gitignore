@@ -1,2 +1,4 @@
 *conf
 internal.md
+localconf.yaml
+*.log
