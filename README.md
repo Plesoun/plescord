@@ -11,3 +11,4 @@ This is a ws server implementation in go (in a form of a messaging app). It is p
 5.  SSL/TLS
 6.  Authentication and user management
 7.  Chat rooms and private messages
+8.  Containerization
