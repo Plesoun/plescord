@@ -7,6 +7,7 @@ import (
 
 	// local packages
 	"main.go/config"
+	logger "main.go/logging"
 
 	// external packages
 	"github.com/gorilla/websocket"
@@ -40,6 +41,11 @@ func main() {
 		log.Fatal("Failed to load configuration")
 	}
 
+	// initialize logging
+	log := logger.NewLogger()
+	log.Info("Test")
+
+	// initialize ws
 	fs := http.FileServer(http.Dir("./test"))
 	http.Handle("/", fs)
 
