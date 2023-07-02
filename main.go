@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -42,8 +43,14 @@ func main() {
 	}
 
 	// initialize logging
-	log := logger.NewLogger()
-	log.Info("Test")
+
+	fmt.Println(">>>>", config)
+	logger, loggingerr := logger.NewLogger(config.LoggingType, config.LoggingPath)
+	if loggingerr != nil {
+		log.Fatalf("Unable to initialize logging: %v", loggingerr)
+	}
+
+	logger.Info("Test")
 
 	// initialize ws
 	fs := http.FileServer(http.Dir("./test"))
@@ -53,11 +60,11 @@ func main() {
 
 	go handleMessages()
 
-	log.Printf("http server started on :%s", config.WebsocketPort)
+	logger.Printf("http server started on :%s", config.WebsocketPort)
 
 	err := http.ListenAndServe(":"+config.WebsocketPort, nil)
 	if err != nil {
-		log.Fatal("ListenAndServe: ", err)
+		logger.Fatal("ListenAndServe: ", err)
 	}
 }
 
